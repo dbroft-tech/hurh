@@ -1,20 +1,20 @@
 /* ============================================
-   Grace Community Church - JavaScript
+   Triumphant Ministry - JavaScript
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Navbar scroll effect ---
-    const navbar = document.getElementById('navbar');
-    const handleScroll = () => {
-        if (window.scrollY > 60) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    // --- Hero carousel ---
+    const slides = document.querySelectorAll('.hero-slide');
+    if (slides.length > 1) {
+        let current = 0;
+        setInterval(() => {
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
+        }, 8000);
+    }
+
 
     // --- Mobile nav toggle ---
     const navToggle = document.getElementById('navToggle');
@@ -118,7 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', () => {
             const scrolled = window.scrollY;
             if (scrolled < window.innerHeight) {
-                hero.style.backgroundPositionY = `${scrolled * 0.3}px`;
+                const activeSlide = hero.querySelector('.hero-slide.active');
+                if (activeSlide) {
+                    activeSlide.style.backgroundPositionY = `${scrolled * 0.3}px`;
+                }
             }
         }, { passive: true });
     }

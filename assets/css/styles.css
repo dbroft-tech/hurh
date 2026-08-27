@@ -1,29 +1,30 @@
 /* ============================================
-   Grace Community Church - Stylesheet
+   Triumphant Ministry - Stylesheet
    ============================================ */
 
 /* --- CSS Variables --- */
 :root {
-    --color-primary: #1a365d;
-    --color-primary-light: #2c5282;
-    --color-secondary: #c9a84c;
-    --color-accent: #e8d5a3;
-    --color-bg: #fafaf8;
-    --color-bg-alt: #f0ede6;
+    --color-primary: #231247;
+    --color-primary-light: #3a1d6e;
+    --color-secondary: #ed1f24;
+    --color-accent: #f5e6d3;
+    --color-bg: #f0e6ff;
+    --color-bg-alt: #e6d9f5;
     --color-text: #2d3748;
-    --color-text-light: #718096;
+    --color-text-light: #5a6577;
     --color-white: #ffffff;
-    --color-border: #e2e8f0;
+    --color-border: #d4c5e6;
 
     --font-heading: 'Playfair Display', Georgia, serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+    --shadow-sm: 4px 4px 8px rgba(174, 153, 204, 0.4), -4px -4px 8px rgba(255, 255, 255, 0.8);
+    --shadow-md: 6px 6px 12px rgba(174, 153, 204, 0.5), -6px -6px 12px rgba(255, 255, 255, 0.9);
+    --shadow-lg: 8px 8px 20px rgba(174, 153, 204, 0.6), -8px -8px 20px rgba(255, 255, 255, 1);
+    --shadow-inset: inset 4px 4px 8px rgba(174, 153, 204, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.7);
 
-    --radius: 8px;
-    --radius-lg: 16px;
+    --radius: 20px;
+    --radius-lg: 30px;
 
     --transition: 0.3s ease;
 }
@@ -112,7 +113,12 @@ ul {
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition);
-    border: 2px solid transparent;
+    border: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn:active {
+    box-shadow: var(--shadow-inset);
 }
 
 .btn-primary {
@@ -129,12 +135,13 @@ ul {
 .btn-secondary {
     background: transparent;
     color: var(--color-white);
-    border-color: rgba(255,255,255,0.5);
+    border: 2px solid var(--color-white);
+    box-shadow: none;
 }
 
 .btn-secondary:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: var(--color-white);
+    background: var(--color-white);
+    color: var(--color-primary);
 }
 
 .btn-full {
@@ -150,15 +157,10 @@ ul {
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 20px 0;
-    transition: var(--transition);
-}
-
-.navbar.scrolled {
-    background: rgba(26, 54, 93, 0.97);
     padding: 12px 0;
-    backdrop-filter: blur(10px);
+    background: var(--color-primary);
     box-shadow: var(--shadow-md);
+    transition: var(--transition);
 }
 
 .nav-container {
@@ -171,10 +173,13 @@ ul {
 }
 
 .nav-logo {
-    font-family: var(--font-heading);
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--color-white);
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo img {
+    height: 40px;
+    width: auto;
 }
 
 .nav-menu {
@@ -183,27 +188,37 @@ ul {
     gap: 32px;
 }
 
+.nav-menu li {
+    overflow: visible;
+}
+
 .nav-link {
     color: rgba(255,255,255,0.85);
     font-size: 0.95rem;
     font-weight: 400;
+    position: relative;
+    display: inline-block;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
     color: var(--color-white);
 }
 
-.nav-cta {
-    background: var(--color-secondary);
-    color: var(--color-primary) !important;
-    padding: 10px 24px;
-    border-radius: var(--radius);
-    font-weight: 500;
+.nav-link:hover {
+    transform: scale(1.15);
 }
 
-.nav-cta:hover {
-    background: var(--color-accent);
-    transform: translateY(-1px);
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-secondary);
+    border-radius: 1px;
 }
 
 /* Mobile Nav Toggle */
@@ -247,27 +262,40 @@ ul {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #1a365d 100%);
     overflow: hidden;
 }
 
-.hero::before {
-    content: '';
+.hero-carousel {
     position: absolute;
     inset: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.03)" d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,128C672,107,768,85,864,90.7C960,96,1056,128,1152,138.7C1248,149,1344,139,1392,133.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"/></svg>') no-repeat bottom;
+    z-index: 0;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
     background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 1;
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.2) 100%);
+    z-index: 1;
+    background: rgba(26, 54, 93, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     padding: 0 24px;
 }
 
@@ -385,13 +413,13 @@ ul {
     border-radius: var(--radius-lg);
     text-align: center;
     transition: var(--transition);
-    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    border: none;
 }
 
 .quick-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-lg);
-    border-color: var(--color-secondary);
 }
 
 .quick-icon {
@@ -403,6 +431,7 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: var(--shadow-sm);
 }
 
 .quick-icon svg {
@@ -499,7 +528,8 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 4px solid var(--color-border);
+    border: none;
+    box-shadow: var(--shadow-md);
 }
 
 .leader-placeholder {
@@ -550,11 +580,12 @@ ul {
     padding: 40px 32px;
     border-radius: var(--radius-lg);
     transition: var(--transition);
-    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    border: none;
 }
 
 .ministry-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-lg);
 }
 
@@ -756,6 +787,7 @@ ul {
     background: var(--color-bg);
     padding: 40px;
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
 }
 
 .contact-form h3 {
@@ -774,13 +806,14 @@ ul {
 .form-group textarea {
     width: 100%;
     padding: 16px;
-    border: 1px solid var(--color-border);
+    border: none;
     border-radius: var(--radius);
     font-family: var(--font-body);
     font-size: 1rem;
     background: var(--color-white);
     transition: var(--transition);
     color: var(--color-text);
+    box-shadow: var(--shadow-inset);
 }
 
 .form-group textarea {
@@ -791,8 +824,7 @@ ul {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+    box-shadow: var(--shadow-inset), 0 0 0 3px rgba(35, 18, 71, 0.15);
 }
 
 .form-group label {
@@ -1007,10 +1039,6 @@ ul {
 
     .nav-link {
         font-size: 1.1rem;
-    }
-
-    .nav-cta {
-        margin-top: 16px;
     }
 
     .hero-title {
